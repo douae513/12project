@@ -1,0 +1,10 @@
+"C:\Program Files\JetBrains\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2024.3.2/bin/ninja/win/x64/ninja.exe" C:/12projectC:/12project/.. -G Ninja -S C:\12project -B C:\12project\cmake-build-debug
+CMake Warning:
+  Ignoring extra path from command line:
+
+   "C:/12projectC:"
+
+
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/12project/cmake-build-debug
