@@ -3,93 +3,93 @@
 #include <map>
 #include "les_h/NoteManager.h"
 #include "les_h/Collection.h"
-#include"les_h/Note.h"
-#include"les_h/Observer.h"
+#include "les_h/Note.h"
+#include "les_h/Observer.h"
 
 int main() {
     NoteManager manager;
     std::map<std::string, Collection*> collections;
 
-    int choix = 0;
+    int choice = 0;
 
     do {
         std::cout << "\n=== MENU ===\n";
-        std::cout << "1. Ajouter une note\n";
-        std::cout << "2. Supprimer une note\n";
-        std::cout << "3. Afficher toutes les notes\n";
-        std::cout << "4. Afficher les notes importantes\n";
-        std::cout << "5. Verrouiller / Deverrouiller une note\n";
-        std::cout << "6. Quitter\n";
-        std::cout << "Choix : ";
-        std::cin >> choix;
+        std::cout << "1. Add a note\n";
+        std::cout << "2. Delete a note\n";
+        std::cout << "3. Show all notes\n";
+        std::cout << "4. Show important notes\n";
+        std::cout << "5. Lock / Unlock a note\n";
+        std::cout << "6. Exit\n";
+        std::cout << "Choice: ";
+        std::cin >> choice;
         std::cin.ignore();
 
-        if (choix == 1) {
-            std::string titre, contenu, nomCollection;
+        if (choice == 1) {
+            std::string title, content, collectionName;
             char importantChar;
 
-            std::cout << "Titre : ";
-            std::getline(std::cin, titre);
+            std::cout << "Title: ";
+            std::getline(std::cin, title);
 
-            std::cout << "Contenu : ";
-            std::getline(std::cin, contenu);
+            std::cout << "Content: ";
+            std::getline(std::cin, content);
 
-            std::cout << "Nom de la collection : ";
-            std::getline(std::cin, nomCollection);
+            std::cout << "Collection name: ";
+            std::getline(std::cin, collectionName);
 
-            std::cout << "Cette note est-elle importante ? (o/n) : ";
+            std::cout << "Is this note important? (y/n): ";
             std::cin >> importantChar;
             std::cin.ignore();
 
-            bool estImportante = (importantChar == 'o' || importantChar == 'O');
+            bool isImportant = (importantChar == 'y' || importantChar == 'Y');
 
-            // Création ou récupération de la collection
-            if (collections.find(nomCollection) == collections.end()) {
-                collections[nomCollection] = new Collection(nomCollection);
-                manager.addObserver(collections[nomCollection]);
+            // Create or get the collection
+            if (collections.find(collectionName) == collections.end()) {
+                collections[collectionName] = new Collection(collectionName);
+                manager.addObserver(collections[collectionName]);
             }
 
-            Note* note = new Note(titre, contenu, nomCollection, estImportante);
+            Note* note = new Note(title, content, collectionName, isImportant);
             manager.addNote(note);
 
-        } else if (choix == 2) {
-            std::string titre;
-            std::cout << "Titre de la note à supprimer : ";
-            std::getline(std::cin, titre);
-            manager.deleteNote(titre);
+        } else if (choice == 2) {
+            std::string title;
+            std::cout << "Title of the note to delete: ";
+            std::getline(std::cin, title);
+            manager.deleteNote(title);
 
-        } else if (choix == 3) {
+        } else if (choice == 3) {
             manager.afficherToutesLesNotes();
 
-        } else if (choix == 4) {
+        } else if (choice == 4) {
             manager.afficherNotesImportantes();
 
-        } else if (choix == 5) {
-            std::string titre;
-            std::cout << "Titre de la note à modifier : ";
-            std::getline(std::cin, titre);
+        } else if (choice == 5) {
+            std::string title;
+            std::cout << "Title of the note to modify: ";
+            std::getline(std::cin, title);
 
-            Note* note = manager.getNote(titre);
+            Note* note = manager.getNote(title);
             if (!note) {
-                std::cout << "Note non trouvée.\n";
+                std::cout << "Note not found.\n";
             } else {
                 if (note->getLocked()) {
                     note->unlock();
-                    std::cout << "Note deverrouillée.\n";
+                    std::cout << "Note unlocked.\n";
                 } else {
                     note->lock();
-                    std::cout << "Note verrouillée.\n";
+                    std::cout << "Note locked.\n";
                 }
             }
         }
 
-    } while (choix != 6);
+    } while (choice != 6);
 
-    // Nettoyage mémoire
+    // Memory cleanup
     for (auto& pair : collections) {
         delete pair.second;
     }
 
-    std::cout << "Au revoir !\n";
+    std::cout << "Goodbye!\n";
     return 0;
 }
